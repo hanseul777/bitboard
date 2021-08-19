@@ -15,14 +15,17 @@ public enum BoardDAO {
     //계속사용해야 해서 상수로 고정시켜놓음. BoardMapper의 namespace사용
     private static final String PREFIX ="org.zerock.bitboard.dao.BoardMapper";
 
-    public void insert(BoardDTO boardDTO) throws RuntimeException {
+    public Integer insert(BoardDTO boardDTO) throws RuntimeException {
+        Integer bno = null; // 예외처리 안에서 return은 가능하면 한 번만 하도록 위에 변수를 빼줘서 맨 마지막에 리턴을 넣어준다.
         //SqlSession이 connection의 기능을해준다.
         try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){
             session.insert(PREFIX+".insert",boardDTO);
+            bno = boardDTO.getBno();
         }catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
+        return bno;
     }
     public BoardDTO select(Integer bno) throws RuntimeException {
         BoardDTO dto = null;

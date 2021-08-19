@@ -6,13 +6,17 @@
     <insert id="insert">
         insert into board(title,content,writer)
         values(#{title}, #{content}, #{writer}) <!--예전에는 (JdbcTemplate을 이용해서)직접 ?로 바꿨던 값들을 dto의 get메소드로 이용한다:#{}-->
+        <selectKey order="AFTER" resultType="int" keyProperty="bno"><!--keyProperty : 키값을 어디에 둘 것인-->
+            select last_insert_id()
+        </selectKey>
     </insert>
 
     <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO"> <!--resultType : 조회한 값을 어떤타입으로 줄건지 -> select에 사용-->
-        select * from board where bno = ${bno} <!-- 값이 하나일 때는 이름을 아무거나줘도 상관없음. 여러개가 있을 때만 맞춰줌-->
+        select * from board where bno = #{bno} <!-- 값이 하나일 때는 이름을 아무거나줘도 상관없음. 여러개가 있을 때만 맞춰줌-->
     </select>
 
     <select id="list" resultType="org.zerock.bitboard.dto.BoardDTO">
+<!--파라미터가 skip과 size가 두 개 필요 -> 객체로 맞춰주는게 좋다 : PageDTO를 생성-->
         select * from board where bno > 0 order by bno desc limit #{skip},#{size}<!--skip과 size는 getter로 -->
     </select>
 

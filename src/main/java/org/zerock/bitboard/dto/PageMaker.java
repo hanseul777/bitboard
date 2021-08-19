@@ -25,9 +25,11 @@ public class PageMaker {
         //ex) 실제 데이터는 13번까지만 있는데 20번까지 출력됨.
 
         //위의 오류를 if문으로 처리
-        if(end*size > total){
-            end = (int)(Math.ceil(total/(double)size));
-        }
+//        if(end*size > total){
+//            end = (int)(Math.ceil(total/(double)size));
+//        }
+        //삼항연사자로 표현하면
+        end = end*size > total ? (int)(Math.ceil(total/(double)size)) : end;
 
     }
 

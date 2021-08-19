@@ -46,6 +46,7 @@ public class ListController extends HttpServlet {
         log.info("=========== step2 ============");
         log.info(dtoList);
 
+        //택배보내기
         request.setAttribute("dtoList",dtoList);
 
         PageMaker pageMaker = new PageMaker(pageDTO.getPage(), pageDTO.getSize(),1230);

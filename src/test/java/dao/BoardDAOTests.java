@@ -16,11 +16,15 @@ public class BoardDAOTests {
                 .writer("Writer")
                 .build();
         BoardDAO.INSTANCE.insert(boardDTO);
+
+        log.info("=============================================");
+        log.info(boardDTO); //bno가 들어가있는 것을 볼 수 있는데 그게 새로 만들어진 bno
     }
     @Test
     public void testSelect() {
         log.info(BoardDAO.INSTANCE.select(3));
     }
+
     @Test
     public void testList() {
         PageDTO pageDTO = PageDTO.builder().page(3).build();
@@ -32,6 +36,7 @@ public class BoardDAOTests {
     public void testDelete() {
         BoardDAO.INSTANCE.delete(1);
     }
+
     @Test
     public void testUpdate() {
         BoardDTO boardDTO =
