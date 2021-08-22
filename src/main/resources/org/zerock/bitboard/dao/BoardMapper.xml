@@ -11,6 +11,11 @@
         </selectKey>
     </insert>
 
+    <insert id="insertAttach">
+        insert into attach (bno,fname,savename,imgyn)
+        values (#{bno},#{fname},#{savename},#{imgyn})
+    </insert>
+
     <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO"> <!--resultType : 조회한 값을 어떤타입으로 줄건지 -> select에 사용-->
         select * from board where bno = #{bno} <!-- 값이 하나일 때는 이름을 아무거나줘도 상관없음. 여러개가 있을 때만 맞춰줌-->
     </select>

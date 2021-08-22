@@ -3,6 +3,7 @@ package org.zerock.bitboard.dao;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.zerock.bitboard.dto.AttachDTO;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
 
@@ -15,12 +16,23 @@ public enum BoardDAO {
     //계속사용해야 해서 상수로 고정시켜놓음. BoardMapper의 namespace사용
     private static final String PREFIX ="org.zerock.bitboard.dao.BoardMapper";
 
+    //register도 insert로 사용하기 위해서 void -> Interger로 변경해줌. (ResigerController의 bno로 불리기 위해서
     public Integer insert(BoardDTO boardDTO) throws RuntimeException {
         Integer bno = null; // 예외처리 안에서 return은 가능하면 한 번만 하도록 위에 변수를 빼줘서 맨 마지막에 리턴을 넣어준다.
         //SqlSession이 connection의 기능을해준다.
         try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){
             session.insert(PREFIX+".insert",boardDTO);
             bno = boardDTO.getBno();
+
+            List<AttachDTO> attachDTOList = boardDTO.getAttachDTOList();
+            if(attachDTOList != null && attachDTOList.size() > 0) { //attachDTOList에 첨부파일이 없으면 null -> 첨부파일이 있을 때만 for가 진행되도록해준다.
+                for (AttachDTO attachDTO : attachDTOList) {
+                    attachDTO.setBno(bno); // bno먼저 추가하고 시작해야함
+                    session.insert(PREFIX + ".insertAttach", attachDTO);
+                }
+            }
+            session.commit();
+
         }catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());

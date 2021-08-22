@@ -3,11 +3,41 @@ package dao;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.zerock.bitboard.dao.BoardDAO;
+import org.zerock.bitboard.dto.AttachDTO;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
 
 @Log4j2
 public class BoardDAOTests {
+
+    @Test
+    public void testInsertWithAttach() {
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("Test")
+                .content("Contnet")
+                .writer("Writer")
+                .build();
+        Integer bno = BoardDAO.INSTANCE.insert(boardDTO);
+
+        //가짜데이터를 3개정도 만들어서 넣어줌
+        for(int i = 0; i <3; i++){
+            AttachDTO attachDTO = AttachDTO.builder()
+                    .bno(bno) // 원래 bno는 insert가 실행할 때 생긴다 -> 첨부파일이 들어가고 insert가 실행되어야 생성.
+                    .fname("file"+i+".jpg")
+                    .savename(System.currentTimeMillis()+"_file"+i+".jpg")
+                    .imgyn(true)
+                    .build();
+            //원래는 boardDTO.addAttach(attachDTO)로 들어갔었다.
+        }// 이거만으로 DB에 insert를 할 수 있다. -> 이대로 save를 할 수 있음!
+
+        //---------기존 Controller(BoardDTO를 제대로 구성해 줄 수 았는 역할)가 처리할 수 있는 범위는 여기까지---------------------
+
+        log.info("=============================================");
+        log.info(boardDTO);
+
+        //
+    }
+
     @Test
     public void testInsert() {
         BoardDTO boardDTO = BoardDTO.builder()
