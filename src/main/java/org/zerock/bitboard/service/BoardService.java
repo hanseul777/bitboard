@@ -30,8 +30,7 @@ public enum BoardService {
         BoardDAO.INSTANCE.delete(bno);
     }
 
-    public void update(BoardDTO dto) throws RuntimeException{
-        BoardDAO.INSTANCE.update(dto);
-
+    public void modify(BoardDTO boardDTO) throws RuntimeException{
+        BoardDAO.INSTANCE.update(boardDTO);
     }
 }

@@ -11,6 +11,14 @@
     <title>Title</title>
 </head>
 <body>
-${title}
+<form action="/board/modify" method="post">
+    <input type="text" name="bno" value="${boardDTO.bno}" readonly>
+<input type="text" name="title" value="${boardDTO.title}">
+    <input type="text" name="content" value="${boardDTO.content}">
+    <input type="text" name="writer" value="${boardDTO.writer}" readonly>
+
+
+    <button type="submit">수정</button>
+</form>
 </body>
 </html>
