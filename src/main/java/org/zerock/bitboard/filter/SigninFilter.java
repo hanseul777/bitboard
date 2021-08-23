@@ -40,6 +40,6 @@ public class SigninFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        Filter.super.destroy();
     }
 }

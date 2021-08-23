@@ -24,10 +24,9 @@ public enum BoardService {
     public BoardDTO read(Integer bno) throws RuntimeException{
         log.info("BoardService................................." + bno);
         return BoardDAO.INSTANCE.select(bno);
-
     }
 
-    public void delete(Integer bno) throws RuntimeException {
+    public void remove(Integer bno) throws RuntimeException {
         BoardDAO.INSTANCE.delete(bno);
     }
 

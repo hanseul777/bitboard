@@ -20,7 +20,7 @@ public enum BoardDAO {
     public Integer insert(BoardDTO boardDTO) throws RuntimeException {
         Integer bno = null; // 예외처리 안에서 return은 가능하면 한 번만 하도록 위에 변수를 빼줘서 맨 마지막에 리턴을 넣어준다.
         //SqlSession이 connection의 기능을해준다.
-        try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){
+        try (SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){ //true적으면 매번 실행하고 commit 안 적어도 동일한 결과나옴 -> commit없으면 실행 X
             session.insert(PREFIX+".insert",boardDTO);
             bno = boardDTO.getBno();
 

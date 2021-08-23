@@ -18,10 +18,12 @@
 <!-- 2. 버튼누르면 목록으로 가기 -->
 <!-- 게시글에 들어갔다가 목록으로 다시 가도 URL에 정보가 그대로 유지되어있어야 함.-->
 <a href="/board/list?page=${pageDTO.page}&size=${pageDTO.size}">목록가기</a>
-<form action="/board/modify" method="post">
+
+<form action="/board/modify?bno=${boardDTO.bno}" method="post">
 <button type="submit">수정</button>
 </form>
-<form action="/board/remove" method="post">
+
+<form action="/board/remove?bno=${boardDTO.bno}" method="post">
 <button type="submit">삭제</button>
 </form>
 

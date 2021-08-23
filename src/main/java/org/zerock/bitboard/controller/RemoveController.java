@@ -12,10 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Log4j2
-@WebServlet("/board/remove")
+@WebServlet(name = "RemoveController", value = "/board/remove")
 public class RemoveController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        Integer bno = Integer.parseInt(request.getParameter("bno"));
+
+        BoardService.INSTANCE.remove(bno);
+
+        response.sendRedirect("/board/list");
 
     }
 }
